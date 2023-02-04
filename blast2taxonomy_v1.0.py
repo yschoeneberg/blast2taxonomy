@@ -1,6 +1,6 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
-#This script takes in a blast result table and outputs the taxonomy data
+# Takes in a blast result table and outputs the taxonomy data in a tsv-file.
 import getopt
 import sys
 import logging
@@ -22,7 +22,7 @@ def get_options(argv):
         if opt == '-h':
             print("Usage: blast2taxonomy_v1.0.py [options]\n"
                   "REQUIRED:\n"
-                  "\t-i\tTabular Blast results as input file\n"
+                  "\t-i\tTabular Blast results input file\n"
                   "\t-o\tOutput file\n"
                   "\t-c\tColumn number containing the staxids\n"
                   "\t-t\tNumber of threads\n"
