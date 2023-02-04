@@ -1,6 +1,7 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
 # Takes in a blast result table and outputs the taxonomy data in a tsv-file.
+# Version 1.1
 import getopt
 import sys
 import logging
