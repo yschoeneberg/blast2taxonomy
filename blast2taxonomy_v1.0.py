@@ -29,6 +29,7 @@ def get_options(argv):
                   "OPTIONAL:\n"
                   "\t-s\tSkip Taxonomy Database Update\n"
                   "\t-h\tDisplay this help message")
+            exit()
         elif opt == '-i':
             global blast_infile
             blast_infile = arg
