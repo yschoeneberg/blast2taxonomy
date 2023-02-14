@@ -26,6 +26,7 @@ def get_options(argv):
     for opt, arg in opts:
         if opt == '-h':
             print(f"\nUsage: blast2taxonomy_v{str(version)}.py [options]\n"
+                  f"Version: {str(version)}\n"
                   f"\n"
                   f"REQUIRED:\n"
                   f"\t-i\tTabular Blast results input file\n"
@@ -36,8 +37,7 @@ def get_options(argv):
                   f"\t-t\tNumber of threads [1]\n"
                   f"\t-s\tSkip Taxonomy Database Update\n"
                   f"\t-h\tDisplay this help message\n"
-                  f"\n"
-                  f"Version: {str(version)}")
+                  f"\n")
             exit()
         elif opt == '-i':
             global blast_infile
