@@ -20,6 +20,7 @@ def get_options(argv):
         print(f"Usage: blast2taxonomy_v{str(version)}.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
               f"Type blast2taxonomy_v{str(version)}.py -h for help")
     global skip_update
+    global threads
     skip_update = False
     threads = 1
     for opt, arg in opts:
@@ -48,7 +49,6 @@ def get_options(argv):
             global tax_column
             tax_column = int(arg)
         elif opt == "-t":
-            global threads
             threads = int(arg)
         elif opt == "-s":
             skip_update = True
