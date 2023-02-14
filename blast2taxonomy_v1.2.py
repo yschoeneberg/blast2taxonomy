@@ -13,25 +13,30 @@ from itertools import repeat
 
 
 def get_options(argv):
+    version=1.2
     try:
-        opts, args = getopt.getopt(argv, "hsi:o:c:t:r:", ["ifile=", "ofile="])
+        opts, args = getopt.getopt(argv, "hsi:o:c:t:", ["ifile=", "ofile="])
     except getopt.GetoptError:
         print(f"Usage: blast2taxonomy_v1.2.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
               f"Type blast2taxonomy_v1.2.py -h for help")
     global skip_update
     skip_update = False
+    threads = 1
     for opt, arg in opts:
         if opt == '-h':
-            print("Usage: blast2taxonomy_v1.0.py [options]\n"
+            print(f"\nUsage: blast2taxonomy_v{str(version)}.py [options]\n"
+                  "\n"
                   "REQUIRED:\n"
                   "\t-i\tTabular Blast results input file\n"
                   "\t-o\tOutput file\n"
                   "\t-c\tColumn number containing the staxids\n"
-                  "\t-t\tNumber of threads\n"
+                  "\n"
                   "OPTIONAL:\n"
-                  "\t-r\tComma seperated list of desired taxonomy output levels"
+                  "\t-t\tNumber of threads [1]\n"
                   "\t-s\tSkip Taxonomy Database Update\n"
-                  "\t-h\tDisplay this help message")
+                  "\t-h\tDisplay this help message\n"
+                  "\n"
+                  f"Version: {str(version)})
             exit()
         elif opt == '-i':
             global blast_infile
