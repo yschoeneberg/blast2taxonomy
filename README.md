@@ -13,10 +13,12 @@ A tsv file containig the query ID and the taxonomy information.
 Usage: blast2taxonomy_v1.1.py [options]
 
 REQUIRED:
+
     -i  Tabular Blast results input file
     -o  Output file
     -c  Column number containing the staxids
-    -t  Number of threads
 OPTIONAL:
+    -t  Number of threads
     -s  Skip Taxonomy Database Update
+    -h  Display this help message
 ```
