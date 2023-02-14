@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
 # Takes in a blast result table and outputs the taxonomy data in a tsv-file.
