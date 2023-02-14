@@ -20,7 +20,7 @@ REQUIRED:
     -c  Column number containing the staxids
     
 OPTIONAL:
-    -t  Number of threads
+    -t  Number of threads [1]
     -s  Skip Taxonomy Database Update
     -h  Display this help message
 ```
