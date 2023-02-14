@@ -13,7 +13,7 @@ from itertools import repeat
 
 
 def get_options(argv):
-    version=1.2
+    version = 1.2
     try:
         opts, args = getopt.getopt(argv, "hsi:o:c:t:", ["ifile=", "ofile="])
     except getopt.GetoptError:
