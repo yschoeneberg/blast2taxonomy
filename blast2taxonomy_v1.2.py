@@ -102,7 +102,7 @@ if __name__ == '__main__':
                 f"{'Output file:':<50} {outfile}\n"
                 f"{'Number of threads':<50} {threads}")
     blast_results = pd.read_csv(blast_infile, sep="\t")
-    blast_results = blast_results.values.tolist()[:1]
+    blast_results = blast_results.values.tolist()
     global ncbi
     ncbi = NCBITaxa()
     if skip_update is False:
