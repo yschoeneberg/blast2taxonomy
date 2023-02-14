@@ -68,7 +68,7 @@ def get_taxonomy (parameters):
         for id in taxids:
             lineage = ncbi.get_lineage(id)
             tax_dict = ncbi.get_taxid_translator(lineage)
-            tax_inf = list(tax_dict.values())
+            tax_inf = [taxonomy[taxid] for taxid in lineage]
             tax_annotations.append(tax_inf)
         transp_taxs = list(zip(*tax_annotations))
         lca_taxonomy = []
