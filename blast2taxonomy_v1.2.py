@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
-# Takes in a blast result table and outputs the taxonomy data in a tsv-file.
-# Version 1.1
+# This script takes in a blast result table and outputs the taxonomy data in a tsv file
+# Version 1.2
 import getopt
 import sys
 import logging
@@ -13,24 +13,31 @@ from itertools import repeat
 
 
 def get_options(argv):
+    version = 1.2
     try:
         opts, args = getopt.getopt(argv, "hsi:o:c:t:", ["ifile=", "ofile="])
     except getopt.GetoptError:
-        print(f"Usage: blast2taxonomy_v1.0.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
-              f"Type blast2taxonomy_v1.0.py -h for help")
+        print(f"Usage: blast2taxonomy_v{str(version)}.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
+              f"Type blast2taxonomy_v{str(version)}.py -h for help")
     global skip_update
+    global threads
     skip_update = False
+    threads = 1
     for opt, arg in opts:
         if opt == '-h':
-            print("Usage: blast2taxonomy_v1.0.py [options]\n"
-                  "REQUIRED:\n"
-                  "\t-i\tTabular Blast results input file\n"
-                  "\t-o\tOutput file\n"
-                  "\t-c\tColumn number containing the staxids\n"
-                  "\t-t\tNumber of threads\n"
-                  "OPTIONAL:\n"
-                  "\t-s\tSkip Taxonomy Database Update\n"
-                  "\t-h\tDisplay this help message")
+            print(f"\nUsage: blast2taxonomy_v{str(version)}.py [options]\n"
+                  f"Version: {str(version)}\n"
+                  f"\n"
+                  f"REQUIRED:\n"
+                  f"\t-i\tTabular Blast results input file\n"
+                  f"\t-o\tOutput file\n"
+                  f"\t-c\tColumn number containing the staxids\n"
+                  f"\n"
+                  f"OPTIONAL:\n"
+                  f"\t-t\tNumber of threads [1]\n"
+                  f"\t-s\tSkip Taxonomy Database Update\n"
+                  f"\t-h\tDisplay this help message\n"
+                  f"\n")
             exit()
         elif opt == '-i':
             global blast_infile
@@ -42,7 +49,6 @@ def get_options(argv):
             global tax_column
             tax_column = int(arg)
         elif opt == "-t":
-            global threads
             threads = int(arg)
         elif opt == "-s":
             skip_update = True
@@ -61,13 +67,13 @@ def get_taxonomy (parameters):
     if len(taxids) == 1:
         lineage = ncbi.get_lineage(taxids[0])
         taxonomy = ncbi.get_taxid_translator(lineage)
-        return [blast_result[0]] + list(taxonomy.values())
+        return [blast_result[0]] + [taxonomy[taxid] for taxid in lineage]
     elif len(taxids) > 1:
         tax_annotations = []
         for id in taxids:
             lineage = ncbi.get_lineage(id)
-            tax_dict = ncbi.get_taxid_translator(lineage)
-            tax_inf = list(tax_dict.values())
+            taxonomy = ncbi.get_taxid_translator(lineage)
+            tax_inf = [taxonomy[taxid] for taxid in lineage]
             tax_annotations.append(tax_inf)
         transp_taxs = list(zip(*tax_annotations))
         lca_taxonomy = []
