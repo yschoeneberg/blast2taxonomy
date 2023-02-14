@@ -17,26 +17,26 @@ def get_options(argv):
     try:
         opts, args = getopt.getopt(argv, "hsi:o:c:t:", ["ifile=", "ofile="])
     except getopt.GetoptError:
-        print(f"Usage: blast2taxonomy_v1.2.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
-              f"Type blast2taxonomy_v1.2.py -h for help")
+        print(f"Usage: blast2taxonomy_v{str(version)}.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
+              f"Type blast2taxonomy_v{str(version)}.py -h for help")
     global skip_update
     skip_update = False
     threads = 1
     for opt, arg in opts:
         if opt == '-h':
             print(f"\nUsage: blast2taxonomy_v{str(version)}.py [options]\n"
-                  "\n"
-                  "REQUIRED:\n"
-                  "\t-i\tTabular Blast results input file\n"
-                  "\t-o\tOutput file\n"
-                  "\t-c\tColumn number containing the staxids\n"
-                  "\n"
-                  "OPTIONAL:\n"
-                  "\t-t\tNumber of threads [1]\n"
-                  "\t-s\tSkip Taxonomy Database Update\n"
-                  "\t-h\tDisplay this help message\n"
-                  "\n"
-                  f"Version: {str(version)})
+                  f"\n"
+                  f"REQUIRED:\n"
+                  f"\t-i\tTabular Blast results input file\n"
+                  f"\t-o\tOutput file\n"
+                  f"\t-c\tColumn number containing the staxids\n"
+                  f"\n"
+                  f"OPTIONAL:\n"
+                  f"\t-t\tNumber of threads [1]\n"
+                  f"\t-s\tSkip Taxonomy Database Update\n"
+                  f"\t-h\tDisplay this help message\n"
+                  f"\n"
+                  f"Version: {str(version)}")
             exit()
         elif opt == '-i':
             global blast_infile
