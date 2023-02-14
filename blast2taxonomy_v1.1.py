@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
-# Takes in a blast result table and outputs the taxonomy data in a tsv-file.
-# Version 1.1
+# This script takes in a blast result table and outputs the taxonomy data in a tsv file
+# Version 1.2
 import getopt
 import sys
 import logging
@@ -14,10 +14,10 @@ from itertools import repeat
 
 def get_options(argv):
     try:
-        opts, args = getopt.getopt(argv, "hsi:o:c:t:", ["ifile=", "ofile="])
+        opts, args = getopt.getopt(argv, "hsi:o:c:t:r:", ["ifile=", "ofile="])
     except getopt.GetoptError:
-        print(f"Usage: blast2taxonomy_v1.0.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
-              f"Type blast2taxonomy_v1.0.py -h for help")
+        print(f"Usage: blast2taxonomy_v1.2.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
+              f"Type blast2taxonomy_v1.2.py -h for help")
     global skip_update
     skip_update = False
     for opt, arg in opts:
@@ -29,6 +29,7 @@ def get_options(argv):
                   "\t-c\tColumn number containing the staxids\n"
                   "\t-t\tNumber of threads\n"
                   "OPTIONAL:\n"
+                  "\t-r\tComma seperated list of desired taxonomy output levels"
                   "\t-s\tSkip Taxonomy Database Update\n"
                   "\t-h\tDisplay this help message")
             exit()
@@ -61,7 +62,7 @@ def get_taxonomy (parameters):
     if len(taxids) == 1:
         lineage = ncbi.get_lineage(taxids[0])
         taxonomy = ncbi.get_taxid_translator(lineage)
-        return [blast_result[0]] + list(taxonomy.values())
+        return [blast_result[0]] + [taxonomy[taxid] for taxid in lineage]
     elif len(taxids) > 1:
         tax_annotations = []
         for id in taxids:
@@ -96,7 +97,7 @@ if __name__ == '__main__':
                 f"{'Output file:':<50} {outfile}\n"
                 f"{'Number of threads':<50} {threads}")
     blast_results = pd.read_csv(blast_infile, sep="\t")
-    blast_results = blast_results.values.tolist()
+    blast_results = blast_results.values.tolist()[:1]
     global ncbi
     ncbi = NCBITaxa()
     if skip_update is False:
