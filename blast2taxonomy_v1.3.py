@@ -27,7 +27,7 @@ def get_options(argv):
     global len_column
     skip_update = False
     threads = 1
-    ranks = ['kingdom', 'phylum', 'superclass', 'class', 'subclass', 'order', 'infraorder', 'superfamily', 'family', 'genus', 'sciname' 'species']
+    ranks = ['kingdom', 'phylum', 'superclass', 'class', 'subclass', 'order', 'infraorder', 'superfamily', 'family', 'genus', 'species']
     tax_column = 13
     perc_column = 3
     len_column = 4
