@@ -15,17 +15,19 @@ A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
 A tsv file containig the query ID and the taxonomy information.
 ## Command Line Options
 ```
-Usage: blast2taxonomy_v1.2.py [options]
-Version: 1.2
+Usage: blast2taxonomy_v1.3.py [options]
+Version: 1.3
 
 REQUIRED:
+        -i      Tabular Blast results input file
+        -o      Output file
 
-    -i  Tabular Blast results input file
-    -o  Output file
-    -c  Column number containing the staxids
-    
 OPTIONAL:
-    -t  Number of threads [1]
-    -s  Skip Taxonomy Database Update
-    -h  Display this help message
+        -r      Comma seperated list of taxonomic ranks to extract
+        -c      Column number containing the staxids [13]
+        -p      Column number containing the percent identity [3]
+        -l      Column number containing the length of the subject [4]
+        -t      Number of threads [1]
+        -s      Skip Taxonomy Database Update
+        -h      Display this help message
 ```
