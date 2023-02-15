@@ -4,6 +4,10 @@ This script extracts the whole taxonomy information for blast hits. It automatic
 - Python 3
   - ete3 Toolkit
   - Pandas
+To set up a conda environment:
+```
+conda create -c bioconda -n blast2tax pandas ete3
+```
 ## Input
 A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
 ## Output
