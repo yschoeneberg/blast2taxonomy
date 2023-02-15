@@ -4,6 +4,7 @@ This script extracts the whole taxonomy information for blast hits. It automatic
 - Python 3
   - ete3 Toolkit (tested with v3.1.2)
   - Pandas (tested with 1.5.3)
+ 
 To set up a conda environment:
 ```
 conda create -c conda-forge -n blast2tax pandas ete3
