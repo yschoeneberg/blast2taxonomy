@@ -41,7 +41,7 @@ def get_options(argv):
                   f"\t-o\tOutput file\n"
                   f"\n"
                   f"OPTIONAL:\n"
-                  f"\t-r\tComma seperated list of taxonomic ranks to extract"
+                  f"\t-r\tComma seperated list of taxonomic ranks to extract\n"
                   f"\t-c\tColumn number containing the staxids [13]\n"
                   f"\t-p\tColumn number containing the percent identity [3]\n"
                   f"\t-l\tColumn number containing the length of the subject [4]\n"
