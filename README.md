@@ -12,7 +12,7 @@ conda create -c conda-forge -n blast2tax pandas ete3=3.1.2
 ## Input
 A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
 ## Output
-A tsv file containig the query ID and the taxonomy information.
+A tsv file containig the query ID, percent identity, subject length and the taxonomy information.
 ## Command Line Options
 ```
 Usage: blast2taxonomy_v1.3.py [options]
