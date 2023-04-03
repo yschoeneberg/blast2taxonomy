@@ -2,7 +2,7 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.3
+# Version 1.3.2
 import getopt
 import sys
 import logging
@@ -13,7 +13,7 @@ from itertools import repeat
 
 
 def get_options(argv):
-    version = 1.3
+    version = 1.3.2
     try:
         opts, args = getopt.getopt(argv, "hsi:o:c:t:p:l:", ["ifile=", "ofile="])
     except getopt.GetoptError:
@@ -146,5 +146,5 @@ if __name__ == '__main__':
 
     logger.info(f"Writing Taxonomy Information to: {outfile}")
     headers = ['query'] + ["perc_id", "sbjct_len"] + ranks 
-    pd.DataFrame(taxlist).to_csv(outfile, sep="\t", index=False, header=headers)
+    pd.DataFrame(taxlist, columns=headers).to_csv(outfile, sep="\t", index=False)
     logger.info(f"Done")
