@@ -2,9 +2,10 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.3
+# Version 1.3.2
 import getopt
 import sys
+import os
 import logging
 import pandas as pd
 from multiprocessing import Pool
@@ -13,7 +14,7 @@ from itertools import repeat
 
 
 def get_options(argv):
-    version = 1.3
+    version = "1.3.2"
     try:
         opts, args = getopt.getopt(argv, "hsi:o:c:t:p:l:", ["ifile=", "ofile="])
     except getopt.GetoptError:
@@ -74,6 +75,8 @@ def update_taxdb():
     logger.info(f"### Updating Taxonomy Database")
     ncbi.update_taxonomy_database()
     logger.info(f"Finished Updating Database")
+    logger.info(f"Removing temporary files")
+    os.remove("taxdump.tar.gz")
 
 
 def get_taxonomy (parameters):
@@ -131,7 +134,8 @@ if __name__ == '__main__':
                 f"{'Output file:':<50} {outfile}\n"
                 f"{'Skip Taxonomy DB update:':<50} {skip_update}\n"
                 f"{'Number of threads':<50} {threads}")
-    blast_results = pd.read_csv(blast_infile, sep="\t")
+    blast_results = pd.read_csv(blast_infile, sep="\t", header="None")
+    print(blast_results)
     blast_results = blast_results.values.tolist()
     global ncbi
     ncbi = NCBITaxa()
@@ -143,8 +147,10 @@ if __name__ == '__main__':
     logger.info(f"Searching TaxIDs vs Taxonomy DB")
     with Pool(threads) as pool:
         taxlist = pool.map(get_taxonomy, zip(blast_results,repeat(ranks), repeat(tax_column), repeat(perc_column), repeat(len_column)))
+    print(taxlist[:10])
 
     logger.info(f"Writing Taxonomy Information to: {outfile}")
-    headers = ['query'] + ["perc_id", "sbjct_len"] + ranks 
-    pd.DataFrame(taxlist).to_csv(outfile, sep="\t", index=False, header=headers)
+    headers = ["query", "perc_id", "sbjct_len"] + ranks
+    print(pd.DataFrame(taxlist[:10]))
+    pd.DataFrame(taxlist, columns=headers).to_csv(outfile, sep="\t", index=False)
     logger.info(f"Done")
