@@ -135,7 +135,6 @@ if __name__ == '__main__':
                 f"{'Skip Taxonomy DB update:':<50} {skip_update}\n"
                 f"{'Number of threads':<50} {threads}")
     blast_results = pd.read_csv(blast_infile, sep="\t", header=None)
-    print(blast_results)
     blast_results = blast_results.values.tolist()
     global ncbi
     ncbi = NCBITaxa()
@@ -151,6 +150,5 @@ if __name__ == '__main__':
 
     logger.info(f"Writing Taxonomy Information to: {outfile}")
     headers = ["query", "perc_id", "sbjct_len"] + ranks
-    print(pd.DataFrame(taxlist[:10]))
     pd.DataFrame(taxlist, columns=headers).to_csv(outfile, sep="\t", index=False)
     logger.info(f"Done")
