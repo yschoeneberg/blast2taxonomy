@@ -134,7 +134,7 @@ if __name__ == '__main__':
                 f"{'Output file:':<50} {outfile}\n"
                 f"{'Skip Taxonomy DB update:':<50} {skip_update}\n"
                 f"{'Number of threads':<50} {threads}")
-    blast_results = pd.read_csv(blast_infile, sep="\t", header="None")
+    blast_results = pd.read_csv(blast_infile, sep="\t", header=None)
     print(blast_results)
     blast_results = blast_results.values.tolist()
     global ncbi
