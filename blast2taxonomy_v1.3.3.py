@@ -146,7 +146,6 @@ if __name__ == '__main__':
     logger.info(f"Searching TaxIDs vs Taxonomy DB")
     with Pool(threads) as pool:
         taxlist = pool.map(get_taxonomy, zip(blast_results,repeat(ranks), repeat(tax_column), repeat(perc_column), repeat(len_column)))
-    print(taxlist[:10])
 
     logger.info(f"Writing Taxonomy Information to: {outfile}")
     headers = ["query", "perc_id", "sbjct_len"] + ranks
