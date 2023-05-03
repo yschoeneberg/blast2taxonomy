@@ -2,7 +2,7 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.3.2
+# Version 1.3.3
 import getopt
 import sys
 import os
@@ -14,7 +14,7 @@ from itertools import repeat
 
 
 def get_options(argv):
-    version = "1.3.2"
+    version = "1.3.3"
     try:
         opts, args = getopt.getopt(argv, "hsi:o:c:t:p:l:", ["ifile=", "ofile="])
     except getopt.GetoptError:
@@ -134,7 +134,7 @@ if __name__ == '__main__':
                 f"{'Output file:':<50} {outfile}\n"
                 f"{'Skip Taxonomy DB update:':<50} {skip_update}\n"
                 f"{'Number of threads':<50} {threads}")
-    blast_results = pd.read_csv(blast_infile, sep="\t", header="None")
+    blast_results = pd.read_csv(blast_infile, sep="\t", header=None)
     print(blast_results)
     blast_results = blast_results.values.tolist()
     global ncbi
