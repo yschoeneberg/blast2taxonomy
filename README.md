@@ -1,5 +1,5 @@
 # blast2taxonomy
-This script extracts the whole taxonomy information for blast hits. It automatically downloads the NCBI Taxonomy database and updates it if necessary. If there are multiple taxids assigned to a hit, the script returns the lowest common ancestor.
+This script extracts human readable taxonomy information for blast hits. It automatically downloads the NCBI Taxonomy database and updates it if necessary. If there are multiple taxids assigned to a hit, the script returns the lowest common ancestor.
 ## Dependencies
 - Python 3
   - ete3 Toolkit (tested with v3.1.2)
