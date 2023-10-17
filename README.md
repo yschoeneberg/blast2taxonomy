@@ -1,5 +1,8 @@
 # blast2taxonomy
+[![DOI](https://zenodo.org/badge/597052423.svg)](https://zenodo.org/doi/10.5281/zenodo.10009721)
+
 This script extracts human readable NCBI taxonomy information for blast hits. It automatically downloads the NCBI Taxonomy database and updates it if necessary. If there are multiple taxids assigned to a hit, the script returns the lowest common ancestor.
+
 ## Dependencies
 - Python 3
   - ete3 Toolkit (tested with v3.1.2)
@@ -31,3 +34,6 @@ OPTIONAL:
         -s      Skip Taxonomy Database Update
         -h      Display this help message
 ```
+## Citation
+If you used this script, here is a citation you could use:
+Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.3.4“. Zenodo. doi: 10.5281/zenodo.10009721.
