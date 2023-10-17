@@ -35,6 +35,6 @@ OPTIONAL:
         -h      Display this help message
 ```
 ## Citation
-If you used this script, I'd be happy if you cite:
+If you used this script, I'd appreciate if you cite:
 
 Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.3.4“. Zenodo. doi: 10.5281/zenodo.10009721.
