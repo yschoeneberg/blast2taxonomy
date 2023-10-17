@@ -36,4 +36,5 @@ OPTIONAL:
 ```
 ## Citation
 If you used this script, here is a citation you could use:
+
 Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.3.4“. Zenodo. doi: 10.5281/zenodo.10009721.
