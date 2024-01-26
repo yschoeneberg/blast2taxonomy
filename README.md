@@ -18,8 +18,8 @@ A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
 A tsv file containig the query ID, percent identity, subject length and the taxonomy information.
 ## Command Line Options
 ```
-Usage: blast2taxonomy_v1.3.4.py [options]
-Version: 1.3.4
+Usage: blast2taxonomy_v1.4.0.py [options]
+Version: 1.4.0
 
 REQUIRED:
         -i      Tabular Blast results input file
@@ -32,6 +32,7 @@ OPTIONAL:
         -l      Column number containing the length of the subject [4]
         -t      Number of threads [1]
         -s      Skip Taxonomy Database Update
+        -f      Skip failed taxIDs and write these to 'failed_taxids.tsv'
         -h      Display this help message
 ```
 ## Citation
