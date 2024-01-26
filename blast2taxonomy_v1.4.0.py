@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # blast2taxonomy.py
-# Author: Yannis Schöneberg <schoeneberg@gmx.de>
+# Author: Yannis Schöneberg <yannis.schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.3.4
+# Version 1.4.0
 import getopt
 import sys
 import os
@@ -14,24 +14,28 @@ from itertools import repeat
 
 
 def get_options(argv):
-    version = "1.3.4"
+    version = "1.4.0"
     try:
-        opts, args = getopt.getopt(argv, "hsi:o:c:t:p:l:", ["ifile=", "ofile="])
+        opts, args = getopt.getopt(argv, "hfsi:o:c:t:p:l:", ["ifile=", "ofile="])
     except getopt.GetoptError:
         print(f"Usage: blast2taxonomy_v{str(version)}.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
               f"Type blast2taxonomy_v{str(version)}.py -h for help")
     global skip_update
+    global skip_failed
     global threads
     global ranks
     global tax_column
     global perc_column
     global len_column
+    global fail_file
     skip_update = False
+    skip_failed = False
     threads = 1
     ranks = ['kingdom', 'phylum', 'superclass', 'class', 'subclass', 'order', 'infraorder', 'superfamily', 'family', 'genus', 'species']
     tax_column = 13
     perc_column = 3
     len_column = 4
+    fail_file = "failed_taxids.tsv"
     for opt, arg in opts:
         if opt == '-h':
             print(f"\nUsage: blast2taxonomy_v{str(version)}.py [options]\n"
@@ -48,6 +52,7 @@ def get_options(argv):
                   f"\t-l\tColumn number containing the length of the subject [4]\n"
                   f"\t-t\tNumber of threads [1]\n"
                   f"\t-s\tSkip Taxonomy Database Update\n"
+                  f"\t-f\tSkip failed taxIDs and write those to 'failed_taxids.tsv'"
                   f"\t-h\tDisplay this help message\n"
                   f"\n")
             exit()
@@ -59,10 +64,13 @@ def get_options(argv):
             outfile = arg
         elif opt == "-c":
             tax_column = int(arg)
+        elif opt == "-f":
+            skip_failed = True
         elif opt == "-t":
             threads = int(arg)
         elif opt == "-s":
             skip_update = True
+            os.remove(fail_file)
         elif opt == "-r":
             ranks = arg.split(",")
         elif opt == "-p":
@@ -88,31 +96,34 @@ def get_taxonomy (parameters):
     taxids = blast_result[tax_column-1].split(";")
     percid = blast_result[perc_column-1]
     sbjctlen = blast_result[len_column-1]
-    if len(taxids) == 1:
-        lineage = ncbi.get_lineage(taxids[0])
+    tax_annotations = []
+    for id in taxids:
+        try:
+            lineage = ncbi.get_lineage(id)
+        except ValueError as e:
+            if skip_failed == True:
+                logger.warning(f"Taxid {id} not found! Writing to {fail_file}")
+                with open(fail_file, "a") as file:
+                    file.write("\t".join(blast_result))
+                return
+            else:
+                raise ValueError(f"{id} taxid not found. \n"
+                                 f"Did you just update the NCBI-DB? It might not yet be synchronized with the taxonomy db.\n"
+                                 f"Consider trying again later or use the '-f' option") from e
         lineage2ranks = ncbi.get_rank(lineage)
         ranks2lineage = dict((rank, taxid) for (taxid, rank) in lineage2ranks.items())
         desired_taxids = [ranks2lineage.get(rank, 'Nan') for rank in ranks]
         taxonomy = ncbi.get_taxid_translator(lineage)
-        return [blast_result[0]] + [percid] + [sbjctlen] + [taxonomy.get(taxid, 'Nan') for taxid in desired_taxids]
-    elif len(taxids) > 1:
-        tax_annotations = []
-        for id in taxids:
-            lineage = ncbi.get_lineage(id)
-            lineage2ranks = ncbi.get_rank(lineage)
-            ranks2lineage = dict((rank, taxid) for (taxid, rank) in lineage2ranks.items())
-            desired_taxids = [ranks2lineage.get(rank, 'Nan') for rank in ranks]
-            taxonomy = ncbi.get_taxid_translator(lineage)
-            tax_inf = [taxonomy.get(taxid, 'Nan') for taxid in desired_taxids]
-            tax_annotations.append(tax_inf)
-        transp_taxs = list(zip(*tax_annotations))
-        lca_taxonomy = []
-        for tax_level in transp_taxs:
-            if tax_level.count(tax_level[0]) == len(tax_level):
-                lca_taxonomy.append(tax_level[0])
-            else:
-                break
-        return [blast_result[0]] + [percid] + [sbjctlen] + lca_taxonomy 
+        tax_inf = [taxonomy.get(taxid, 'Nan') for taxid in desired_taxids]
+        tax_annotations.append(tax_inf)
+    transp_taxs = list(zip(*tax_annotations))
+    lca_taxonomy = []
+    for tax_level in transp_taxs:
+        if tax_level.count(tax_level[0]) == len(tax_level):
+            lca_taxonomy.append(tax_level[0])
+        else:
+            break
+    return [blast_result[0]] + [percid] + [sbjctlen] + lca_taxonomy 
 
 
 if __name__ == '__main__':
@@ -146,6 +157,7 @@ if __name__ == '__main__':
     logger.info(f"Searching TaxIDs vs Taxonomy DB")
     with Pool(threads) as pool:
         taxlist = pool.map(get_taxonomy, zip(blast_results,repeat(ranks), repeat(tax_column), repeat(perc_column), repeat(len_column)))
+    taxlist = [i for i in taxlist if i is not None]
 
     logger.info(f"Writing Taxonomy Information to: {outfile}")
     headers = ["query", "perc_id", "sbjct_len"] + ranks
