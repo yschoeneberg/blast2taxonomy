@@ -111,10 +111,10 @@ def get_taxonomy (parameters):
                 return
             else:
                 if skip_update == True:
-                    raise ValueError(f"\n{id} taxid not found.\n"
+                    raise ValueError(f"{id} taxid not found.\n"
                                      f"Skipped internal Taxdb update, try rerunning without the option '-s' to update the taxdb")
                 else:
-                    raise ValueError(f"\n{id} taxid not found.\n"
+                    raise ValueError(f"{id} taxid not found.\n"
                                  f"Did you just update the NCBI-DB? It might not yet be synchronized with the taxonomy db.\n"
                                  f"Consider trying again later or use the '-f' option to write failed taxids to {fail_file}."
                                  f"Warning: When using '-f' you should check the failed taxids manually!") from e
