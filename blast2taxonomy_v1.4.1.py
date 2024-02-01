@@ -2,7 +2,7 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <yannis.schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.4.0
+# Version 1.4.1
 import getopt
 import sys
 import os
@@ -14,12 +14,7 @@ from itertools import repeat
 
 
 def get_options(argv):
-    version = "1.4.0"
-    try:
-        opts, args = getopt.getopt(argv, "hfsi:o:c:t:p:l:", ["ifile=", "ofile="])
-    except getopt.GetoptError:
-        print(f"Usage: blast2taxonomy_v{str(version)}.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
-              f"Type blast2taxonomy_v{str(version)}.py -h for help")
+    global version
     global skip_update
     global skip_failed
     global threads
@@ -28,6 +23,7 @@ def get_options(argv):
     global perc_column
     global len_column
     global fail_file
+    version = "1.4.1"
     skip_update = False
     skip_failed = False
     threads = 1
@@ -36,6 +32,13 @@ def get_options(argv):
     perc_column = 3
     len_column = 4
     fail_file = "failed_taxids.tsv"
+    
+    try:
+        opts, args = getopt.getopt(argv, "hfsi:o:c:t:p:l:", ["ifile=", "ofile="])
+    except getopt.GetoptError:
+        print(f"Usage: blast2taxonomy_v{str(version)}.py -i <infile> -o <outfile> -c <column taxids> -t <num threads>\n"
+              f"Type blast2taxonomy_v{str(version)}.py -h for help")
+        
     for opt, arg in opts:
         if opt == '-h':
             print(f"\nUsage: blast2taxonomy_v{str(version)}.py [options]\n"
@@ -107,9 +110,14 @@ def get_taxonomy (parameters):
                     file.write("\t".join(blast_result))
                 return
             else:
-                raise ValueError(f"{id} taxid not found. \n"
+                if skip_update == True:
+                    raise ValueError(f"{id} taxid not found.\n"
+                                     f"Skipped internal Taxdb update, try rerunning without the option '-s' to update the taxdb")
+                else:
+                    raise ValueError(f"{id} taxid not found.\n"
                                  f"Did you just update the NCBI-DB? It might not yet be synchronized with the taxonomy db.\n"
-                                 f"Consider trying again later or use the '-f' option") from e
+                                 f"Consider trying again later or use the '-f' option to write failed taxids to {fail_file}."
+                                 f"Warning: When using '-f' you should check the failed taxids manually!") from e
         lineage2ranks = ncbi.get_rank(lineage)
         ranks2lineage = dict((rank, taxid) for (taxid, rank) in lineage2ranks.items())
         desired_taxids = [ranks2lineage.get(rank, 'Nan') for rank in ranks]
@@ -138,13 +146,15 @@ if __name__ == '__main__':
     get_options(sys.argv[1:])
 
     logger.info(f"#### Extracting Taxonomy Information for Blast Results\n"
+                f"{'Program Version:':<50} {str(version)}"
                 f"{'Blast Results File:':<50} {blast_infile}\n"
                 f"{'Column With TaxIDs:':<50} {tax_column}\n"
                 f"{'Column With Perc Identity:':<50} {perc_column}\n"
                 f"{'Column With Subject Length:':<50} {len_column}\n"
                 f"{'Output file:':<50} {outfile}\n"
                 f"{'Skip Taxonomy DB update:':<50} {skip_update}\n"
-                f"{'Number of threads':<50} {threads}")
+                f"{'Skip failed Taxids:':<50} {skip_failed}\n"
+                f"{'Number of threads:':<50} {threads}")
     blast_results = pd.read_csv(blast_infile, sep="\t", dtype=str, header=None)
     blast_results = blast_results.values.tolist()
     global ncbi
