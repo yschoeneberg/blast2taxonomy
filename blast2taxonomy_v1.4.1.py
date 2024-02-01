@@ -73,7 +73,12 @@ def get_options(argv):
             threads = int(arg)
         elif opt == "-s":
             skip_update = True
-            os.remove(fail_file)
+            try:
+                os.remove(fail_file)
+            except FileNotFoundError:
+                pass
+            except Exception as e:
+                raise e
         elif opt == "-r":
             ranks = arg.split(",")
         elif opt == "-p":
