@@ -2,7 +2,7 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <yannis.schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.4.1
+# Version 1.4.2
 import getopt
 import sys
 import os
@@ -23,7 +23,7 @@ def get_options(argv):
     global perc_column
     global len_column
     global fail_file
-    version = "1.4.1"
+    version = "1.4.2"
     skip_update = False
     skip_failed = False
     threads = 1
