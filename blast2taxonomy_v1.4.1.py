@@ -146,7 +146,7 @@ if __name__ == '__main__':
     get_options(sys.argv[1:])
 
     logger.info(f"#### Extracting Taxonomy Information for Blast Results\n"
-                f"{'Program Version:':<50} {str(version)}"
+                f"{'Program Version:':<50} {str(version)}\n"
                 f"{'Blast Results File:':<50} {blast_infile}\n"
                 f"{'Column With TaxIDs:':<50} {tax_column}\n"
                 f"{'Column With Perc Identity:':<50} {perc_column}\n"
