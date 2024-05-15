@@ -36,6 +36,6 @@ OPTIONAL:
         -h      Display this help message
 ```
 ## Citation
-If you used this script, I'd appreciate if you cite:
+To cite this program, you can cite this github repository:
 
 Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy“. Zenodo. doi: 10.5281/zenodo.10009721.
