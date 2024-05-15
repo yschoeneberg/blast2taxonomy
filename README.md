@@ -38,4 +38,4 @@ OPTIONAL:
 ## Citation
 If you used this script, I'd appreciate if you cite:
 
-Yannis Schöneberg (2023) „github.com/yschoeneberg/blast2taxonomy: v1.4.2“. Zenodo. doi: 10.5281/zenodo.10009721.
+Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.4.2“. Zenodo. doi: 10.5281/zenodo.10009721.
