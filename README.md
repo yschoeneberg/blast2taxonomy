@@ -18,8 +18,8 @@ A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
 A tsv file containig the query ID, percent identity, subject length and the taxonomy information.
 ## Command Line Options
 ```
-Usage: blast2taxonomy_v1.4.0.py [options]
-Version: 1.4.0
+Usage: blast2taxonomy_v1.4.2.py [options]
+Version: 1.4.2
 
 REQUIRED:
         -i      Tabular Blast results input file
@@ -38,4 +38,4 @@ OPTIONAL:
 ## Citation
 If you used this script, I'd appreciate if you cite:
 
-Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.3.4“. Zenodo. doi: 10.5281/zenodo.10009721.
+Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.4.2“. Zenodo. doi: 10.5281/zenodo.10009721.
