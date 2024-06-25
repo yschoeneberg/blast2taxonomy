@@ -13,10 +13,7 @@ To set up a conda environment:
 conda create -c conda-forge -n blast2tax pandas ete3=3.1.2
 ```
 ## Input
-A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
-
-This script is configured to work out of the box with the following blast output format:
-
+A tabular blast results file (outfmt 6) containing the taxonomyID as a column. This script is configured to work out of the box with the following blast output format:  
 ```-outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids'```
 ## Output
 A tsv file containig the query ID, percent identity, subject length and the taxonomy information.
