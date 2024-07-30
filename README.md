@@ -37,6 +37,6 @@ OPTIONAL:
         -h      Display this help message
 ```
 ## Citation
-To cite this program, I suggest citing this github repository:
+IF you want to reference this repository, you can use it's DOI:
 
 Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy“. Zenodo. doi: 10.5281/zenodo.10009721.
