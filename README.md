@@ -37,6 +37,6 @@ OPTIONAL:
 ```
 
 ## Citation
-You can reference this script by citing this Github Repository:
+You can reference this script by citing the Github Repository:
 
 Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.3.4“. Zenodo. doi: 10.5281/zenodo.10009721.
