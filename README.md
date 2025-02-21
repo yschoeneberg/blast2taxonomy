@@ -35,7 +35,8 @@ OPTIONAL:
         -f      Skip failed taxIDs and write these to 'failed_taxids.tsv'
         -h      Display this help message
 ```
+
 ## Citation
-If you used this script, I'd appreciate if you cite:
+You can reference this script by citing this Github Repository:
 
 Yannis Schöneberg (2023) „yschoeneberg/blast2taxonomy: v1.3.4“. Zenodo. doi: 10.5281/zenodo.10009721.
