@@ -3,7 +3,7 @@
 
 This script extracts human readable NCBI taxonomy information for blast hits. It automatically downloads the NCBI Taxonomy database and updates it if necessary. If there are multiple taxids assigned to a hit, the script returns the lowest common ancestor.
 ## Installation
-The easiest way to get blast2taxonomy is to download the script by simply cloning the github repository.
+The easiest way to get blast2taxonomy is to download the script by simply cloning the github repository, downloading the latest release.
 ### Dependencies
 - Python 3
   - ete3 Toolkit (tested with v3.1.2)
