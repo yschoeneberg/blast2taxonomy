@@ -2,7 +2,7 @@
 # blast2taxonomy.py
 # Author: Yannis Schöneberg <yannis.schoeneberg@gmx.de>
 # This script takes in a blast result table and outputs the taxonomy data in a tsv file
-# Version 1.4.3
+# Version 1.4.4
 import getopt
 import sys
 import os
@@ -23,7 +23,7 @@ def get_options(argv):
     global perc_column
     global len_column
     global fail_file
-    version = "1.4.3"
+    version = "1.4.4"
     skip_update = False
     skip_failed = False
     threads = 1
@@ -57,7 +57,7 @@ def get_options(argv):
                   f"\t-l\tColumn number containing the length of the subject [4]\n"
                   f"\t-t\tNumber of threads [1]\n"
                   f"\t-s\tSkip Taxonomy Database Update\n"
-                  f"\t-f\tSkip failed taxIDs and write those to 'failed_taxids.tsv'"
+                  f"\t-f\tSkip failed taxIDs and write those to 'failed_taxids.tsv'\n"
                   f"\t-h\tDisplay this help message\n"
                   f"\n")
             exit()

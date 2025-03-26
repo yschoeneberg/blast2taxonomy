@@ -2,13 +2,14 @@
 [![DOI](https://zenodo.org/badge/597052423.svg)](https://zenodo.org/doi/10.5281/zenodo.10009721)
 
 This script extracts human readable NCBI taxonomy information for blast hits. It automatically downloads the NCBI Taxonomy database and updates it if necessary. If there are multiple taxids assigned to a hit, the script returns the lowest common ancestor.
-
-## Dependencies
+## Installation
+The easiest way to get blast2taxonomy is to download the script by simply cloning the github repository.
+### Dependencies
 - Python 3
   - ete3 Toolkit (tested with v3.1.2)
   - Pandas (tested with v1.5.3)
  
-To set up a conda environment:
+To install all dependencies into a conda environment, run:
 ```
 conda create -c conda-forge -n blast2tax pandas ete3=3.1.2
 ```
@@ -18,8 +19,8 @@ A tabular blast results file (outfmt 6) containing the taxonomyID as a column.
 A tsv file containig the query ID, percent identity, subject length and the taxonomy information.
 ## Command Line Options
 ```
-Usage: blast2taxonomy_v1.4.0.py [options]
-Version: 1.4.0
+Usage: blast2taxonomy.py [options]
+Version: 1.4.4
 
 REQUIRED:
         -i      Tabular Blast results input file
@@ -32,7 +33,7 @@ OPTIONAL:
         -l      Column number containing the length of the subject [4]
         -t      Number of threads [1]
         -s      Skip Taxonomy Database Update
-        -f      Skip failed taxIDs and write these to 'failed_taxids.tsv'
+        -f      Skip failed taxIDs and write those to 'failed_taxids.tsv'
         -h      Display this help message
 ```
 
